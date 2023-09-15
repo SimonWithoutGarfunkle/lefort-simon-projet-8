@@ -1,7 +1,6 @@
 package com.openclassrooms.tourguide.service;
 
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,20 +41,48 @@ public class RewardsService {
 	}
 
 	public void calculateRewards(User user) {
-		List<VisitedLocation> userLocations = user.getVisitedLocations();
+
+		List<VisitedLocation> userLocations = user.getVisitedLocations().stream().toList();
 		List<Attraction> attractions = gpsUtil.getAttractions();
+		logger.info("userLocation size = "+userLocations.size());
+
+		List<UserReward> rewardsToAdd = new ArrayList<>();
 
 		for(VisitedLocation visitedLocation : userLocations) {
+
 			for(Attraction attraction : attractions) {
-				if(user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
-					if(nearAttraction(visitedLocation, attraction)) {
-						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
-					}
+				if(nearAttraction(visitedLocation, attraction)) {
+					logger.info("about to add reward for "+attraction.attractionName);
+					rewardsToAdd.add(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
 				}
+
+			}
+		}
+
+		addCalculatedRewards(user, rewardsToAdd);
+
+	}
+
+	public synchronized void addCalculatedRewards(User user, List<UserReward> rewardsToAdd) {
+
+		Set<String> alreadyRewardedAttractionName = new HashSet<>();
+		logger.info("User already got rewards : "+user.getUserRewards().size());
+		for (UserReward alreadyRewarded : user.getUserRewards()) {
+			alreadyRewardedAttractionName.add(alreadyRewarded.attraction.attractionName);
+			logger.info(alreadyRewarded.attraction.attractionName);
+		}
+		logger.info("alreadyRewardedAttractionName size = "+alreadyRewardedAttractionName.size());
+		logger.info("rewardsToAdd size = "+rewardsToAdd.size());
+
+		for (UserReward reward : rewardsToAdd) {
+			if (!(alreadyRewardedAttractionName.contains(reward.attraction.attractionName))) {
+				user.addUserReward(reward);
+				alreadyRewardedAttractionName.add(reward.attraction.attractionName);
+
 			}
 		}
 	}
-	
+
 	public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
 		return getDistance(attraction, location) > attractionProximityRange ? false : true;
 	}

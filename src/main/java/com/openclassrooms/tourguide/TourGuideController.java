@@ -31,6 +31,11 @@ public class TourGuideController {
     public VisitedLocation getLocation(@RequestParam String userName) {
     	return tourGuideService.getUserLocation(getUser(userName));
     }
+
+    @RequestMapping("/getUsers")
+    public List<User> getUsers() {
+        return tourGuideService.getAllUsers();
+    }
     
     //  TODO: Change this method to no longer return a List of Attractions.
  	//  Instead: Get the closest five tourist attractions to the user - no matter how far away they are.
