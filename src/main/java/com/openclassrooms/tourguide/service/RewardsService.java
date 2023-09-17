@@ -14,9 +14,10 @@ import rewardCentral.RewardCentral;
 import com.openclassrooms.tourguide.user.User;
 import com.openclassrooms.tourguide.user.UserReward;
 
+import static com.openclassrooms.tourguide.constant.Constants.STATUTE_MILES_PER_NAUTICAL_MILE;
+
 @Service
 public class RewardsService {
-    private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
 
 	private Logger logger = LoggerFactory.getLogger(RewardsService.class);
 
@@ -58,9 +59,7 @@ public class RewardsService {
 
 			}
 		}
-
 		addCalculatedRewards(user, rewardsToAdd);
-
 	}
 
 	public synchronized void addCalculatedRewards(User user, List<UserReward> rewardsToAdd) {
@@ -91,7 +90,7 @@ public class RewardsService {
 		return getDistance(attraction, visitedLocation.location) > proximityBuffer ? false : true;
 	}
 	
-	private int getRewardPoints(Attraction attraction, User user) {
+	public int getRewardPoints(Attraction attraction, User user) {
 		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
 	}
 	
