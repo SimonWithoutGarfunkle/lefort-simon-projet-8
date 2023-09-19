@@ -35,6 +35,14 @@ public class TourGuideService {
 	public final Tracker tracker;
 	boolean testMode = true;
 
+	/**
+	 * Start the TourGuideService
+	 * If test mode is ON, generate the number of user defined if InternalTestHelper
+	 * Each user has 3 random locations in their history
+	 *
+	 * @param gpsUtil Lib for the geolocation of users
+	 * @param rewardsService Service that distributes rewards to user based on their location
+	 */
 	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
 		this.gpsUtil = gpsUtil;
 		this.rewardsService = rewardsService;
@@ -51,46 +59,96 @@ public class TourGuideService {
 		addShutDownHook();
 	}
 
+	/**
+	 * Get all rewards of the user
+	 *
+	 * @param user to get the list of reward
+	 * @return List of rewards of the user
+	 */
 	public List<UserReward> getUserRewards(User user) {
 		return user.getUserRewards();
 	}
 
+	/**
+	 * Return the last known location of the user.
+	 * If no known location, track the current location of the user.
+	 *
+	 * @param user to locate
+	 * @return most recent user location
+	 */
 	public VisitedLocation getUserLocation(User user) {
+		logger.debug("User already visited " +user.getVisitedLocations().size()+" locations");
 		VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ? user.getLastVisitedLocation()
 				: trackUserLocation(user);
 		return visitedLocation;
 	}
 
+	/**
+	 * Get the User from his username
+	 *
+	 * @param userName of the user
+	 * @return user
+	 */
 	public User getUser(String userName) {
 		return internalUserMap.get(userName);
 	}
 
+	/**
+	 * Return all the user from the test database in memory
+	 *
+	 * @return all the user from the test database in memory
+	 */
 	public List<User> getAllUsers() {
-		return internalUserMap.values().stream().collect(Collectors.toList());
+		return new ArrayList<>(internalUserMap.values());
 	}
 
+	/**
+	 * Verify the username is not already registered then add the user in the memory database
+	 *
+	 * @param user to add
+	 */
 	public void addUser(User user) {
 		if (!internalUserMap.containsKey(user.getUserName())) {
+			logger.info("Adding the user to the database : "+user.getUserName());
 			internalUserMap.put(user.getUserName(), user);
 		}
 	}
 
+	/**
+	 * Retrieves trip deals for a given user based on their reward points.
+	 *
+	 * @param user The user for whom the trip deals are to be retrieved.
+	 * @return A list of trip deals available to the user.
+	 */
 	public List<Provider> getTripDeals(User user) {
-		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
+		int cumulativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
 		List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(),
 				user.getUserPreferences().getNumberOfAdults(), user.getUserPreferences().getNumberOfChildren(),
-				user.getUserPreferences().getTripDuration(), cumulatativeRewardPoints);
+				user.getUserPreferences().getTripDuration(), cumulativeRewardPoints);
 		user.setTripDeals(providers);
 		return providers;
 	}
 
+	/**
+	 * Add the current location to the user and update the rewards with the new location
+	 *
+	 * @param user
+	 * @return the current location
+	 */
 	public VisitedLocation trackUserLocation(User user) {
 		VisitedLocation visitedLocation = gpsUtil.getUserLocation(user.getUserId());
+		logger.info("Adding the current location to the user "+user.getUserName());
 		user.addToVisitedLocations(visitedLocation);
 		rewardsService.calculateRewards(user);
 		return visitedLocation;
 	}
 
+	/**
+	 * Return the 5 closest attraction of the location
+	 *
+	 * @param visitedLocation starting point for the 5 closest attractions
+	 * @return DTO with 5 closest attraction of the location
+	 */
 	public List<NearByAttractionsDTO> getNearByAttractions(VisitedLocation visitedLocation) {
 
 		List<Attraction> attractions = gpsUtil.getAttractions();
@@ -103,6 +161,7 @@ public class TourGuideService {
 			nearByAttractionsDTO.setUserLongitude(visitedLocation.location.longitude);
 			nearByAttractionsDTO.setUserLatitude(visitedLocation.location.latitude);
 			nearByAttractionsDTO.setDistance(rewardsService.getDistance(visitedLocation.location, attraction));
+			nearByAttractionsDTO.setRewardPoints(rewardsService.getRewardPoints(attraction, visitedLocation.userId ));
 			result.add(nearByAttractionsDTO);
 		}
 
@@ -112,6 +171,10 @@ public class TourGuideService {
 		return result;
 	}
 
+
+	/**
+	 * Adds a shutdown hook to stop tracking when the application is terminated.
+	 */
 	private void addShutDownHook() {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {

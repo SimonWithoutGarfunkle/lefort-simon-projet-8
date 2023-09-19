@@ -10,9 +10,6 @@ public class Constants {
     //Conversion factor from nautical miles to statute miles.
     public static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
 
-    /**
-     * The trackingPollingInterval constant specifies the interval time in seconds
-     * for polling user locations. It is set to 5 minutes here, converted to seconds.
-     */
+    //The trackingPollingInterval constant specifies the interval time in seconds for polling user locations. It is set to 5 minutes here, converted to seconds.
     public static final long trackingPollingInterval = TimeUnit.MINUTES.toSeconds(5);
 }
