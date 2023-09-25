@@ -72,7 +72,7 @@ public class User {
 	public void clearVisitedLocations() {
 		visitedLocations.clear();
 	}
-	
+
 	public void addUserReward(UserReward userReward) {
 			userRewards.add(userReward);
 	}

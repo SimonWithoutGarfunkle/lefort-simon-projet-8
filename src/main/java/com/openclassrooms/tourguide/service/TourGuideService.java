@@ -9,6 +9,7 @@ import com.openclassrooms.tourguide.user.UserReward;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -109,7 +110,7 @@ public class TourGuideService {
 	 */
 	public void addUser(User user) {
 		if (!internalUserMap.containsKey(user.getUserName())) {
-			logger.info("Adding the user to the database : "+user.getUserName());
+			logger.debug("Adding the user to the database : "+user.getUserName());
 			internalUserMap.put(user.getUserName(), user);
 		}
 	}
@@ -130,9 +131,36 @@ public class TourGuideService {
 	}
 
 	/**
+	 * Call the trackUserLocation Method on all users of the database
+	 * Tracking of the users are parallelized with multithreading
+	 *
+	 */
+	public void trackAllUserLocation() {
+		List<User> allUsers = getAllUsers();
+		List<CompletableFuture<Void>> futures = new ArrayList<>();
+		logger.info("Tracking all "+allUsers.size()+" users");
+
+		for (User user : allUsers) {
+			CompletableFuture<Void> future = CompletableFuture.runAsync(new Runnable() {
+				@Override
+				public void run() {
+					trackUserLocation(user);
+					logger.info("Tracking "+user.getUserName());
+				}
+			});
+			futures.add(future);
+		}
+
+		futures.forEach(CompletableFuture::join);
+
+	}
+
+
+
+	/**
 	 * Add the current location to the user and update the rewards with the new location
 	 *
-	 * @param user
+	 * @param user to track location
 	 * @return the current location
 	 */
 	public VisitedLocation trackUserLocation(User user) {

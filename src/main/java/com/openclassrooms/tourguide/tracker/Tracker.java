@@ -34,6 +34,13 @@ public class Tracker extends Thread {
 		executorService.shutdownNow();
 	}
 
+	/**
+	 * Continuously tracks all the users until it is interrupted or explicitly stopped
+	 * The Tracker runs on a dedicated thread
+	 * The tracker update the geolocation of all users every 5min by default :
+	 * add their current location to their location history and calculate withe rewards for the new location
+	 *
+	 */
 	@Override
 	public void run() {
 		StopWatch stopWatch = new StopWatch();

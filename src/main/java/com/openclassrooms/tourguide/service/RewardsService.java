@@ -31,6 +31,8 @@ public class RewardsService {
 	private int attractionProximityRange = 200;
 	private final GpsUtil gpsUtil;
 	private final RewardCentral rewardsCentral;
+
+	private final Set<String> addedAttractionNames = Collections.synchronizedSet(new HashSet<>());
 	
 	public RewardsService(GpsUtil gpsUtil, RewardCentral rewardCentral) {
 		this.gpsUtil = gpsUtil;
@@ -45,16 +47,17 @@ public class RewardsService {
 		proximityBuffer = defaultProximityBuffer;
 	}
 
-	/**
+
+	/*
 	 * Calculate rewards and call the add method to reward the user based on all known location of the specified user
 	 * We use a first filter to reduce the size of rewardsToAdd so the add method goes faster
 	 *
 	 * @param user to add rewards
-	 */
+
 	public void calculateRewards(User user) {
 
 		List<VisitedLocation> userLocations = new ArrayList<>(user.getVisitedLocations());
-		logger.info("calculate reward for "+user.getUserName()+" on his "+userLocations.size()+" known locations");
+		logger.debug("calculate reward for "+user.getUserName()+" on his "+userLocations.size()+" known locations");
 
 		List<Attraction> attractions = new ArrayList<>(gpsUtil.getAttractions());
 
@@ -75,31 +78,50 @@ public class RewardsService {
 
 			}
 		}
-		logger.info("Trying to add "+rewardsToAdd.size()+" rewards");
+		logger.debug("Trying to add "+rewardsToAdd.size()+" rewards");
 		addCalculatedRewards(user, rewardsToAdd);
 	}
 
-	/**
+
 	 * Second filter of the list rewards to add, to make sure the list of already rewarded attraction is up-to-date
 	 * Then add the new rewards to the user
 	 *
 	 * @param user to add rewards
 	 * @param rewardsToAdd List of reward to verify then to add
-	 */
+
+
 	private synchronized void addCalculatedRewards(User user, List<UserReward> rewardsToAdd) {
 
 		Set<String> alreadyRewardedAttractionName = new HashSet<>();
 		for (UserReward alreadyRewarded : user.getUserRewards().stream().toList()) {
 			alreadyRewardedAttractionName.add(alreadyRewarded.attraction.attractionName);
-			logger.info(alreadyRewarded.attraction.attractionName);
+			logger.debug(alreadyRewarded.attraction.attractionName);
 		}
 
 		for (UserReward reward : rewardsToAdd) {
 			if (!(alreadyRewardedAttractionName.contains(reward.attraction.attractionName))) {
-				logger.info("Adding reward "+reward.attraction.attractionName+" to "+user.getUserName() );
+				logger.debug("Adding reward "+reward.attraction.attractionName+" to "+user.getUserName() );
 				user.addUserReward(reward);
 				alreadyRewardedAttractionName.add(reward.attraction.attractionName);
 
+			}
+		}
+	}*/
+
+
+	public void calculateRewards(User user) {
+		List<VisitedLocation> userLocations = new ArrayList<>(user.getVisitedLocations());
+		List<Attraction> attractions = gpsUtil.getAttractions();
+		for(VisitedLocation visitedLocation : userLocations) {
+			for(Attraction attraction : attractions) {
+				synchronized(addedAttractionNames) {
+					if(!addedAttractionNames.contains(attraction.attractionName)) {
+						if(nearAttraction(visitedLocation, attraction)) {
+							user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user.getUserId())));
+							addedAttractionNames.add(attraction.attractionName);
+						}
+					}
+				}
 			}
 		}
 	}
@@ -112,7 +134,7 @@ public class RewardsService {
 	 * @return
 	 */
 	public boolean isWithinAttractionProximity(Attraction attraction, Location location) {
-		logger.info("Checking attraction proximity of "+attraction.attractionName+" and location "+location.longitude+"/"+location.latitude);
+		logger.debug("Checking attraction proximity of "+attraction.attractionName+" and location "+location.longitude+"/"+location.latitude);
 		return getDistance(attraction, location) > attractionProximityRange ? false : true;
 	}
 
@@ -124,7 +146,7 @@ public class RewardsService {
 	 * @return true if the user already get close enough of the attraction
 	 */
 	private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
-		logger.info("Checking the user "+visitedLocation.userId+" already get close from "+attraction.attractionName);
+		logger.debug("Checking if the user "+visitedLocation.userId+" already get close from "+attraction.attractionName);
 		return getDistance(attraction, visitedLocation.location) > proximityBuffer ? false : true;
 	}
 
@@ -136,7 +158,7 @@ public class RewardsService {
 	 * @return Int number of points
 	 */
 	public int getRewardPoints(Attraction attraction, UUID userId) {
-		logger.info("Assign reward points to "+userId+" for attraction "+attraction.attractionName);
+		logger.debug("Assign reward points to "+userId+" for attraction "+attraction.attractionName);
 		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, userId);
 	}
 
@@ -148,7 +170,7 @@ public class RewardsService {
 	 * @return the distance in miles
 	 */
 	public double getDistance(Location loc1, Location loc2) {
-		logger.info("Calculate distance between "+loc1.longitude+"/"+loc1.latitude+" and "+loc2.longitude+"/"+loc2.latitude);
+		logger.debug("Calculate distance between "+loc1.longitude+"/"+loc1.latitude+" and "+loc2.longitude+"/"+loc2.latitude);
         double lat1 = Math.toRadians(loc1.latitude);
         double lon1 = Math.toRadians(loc1.longitude);
         double lat2 = Math.toRadians(loc2.latitude);
