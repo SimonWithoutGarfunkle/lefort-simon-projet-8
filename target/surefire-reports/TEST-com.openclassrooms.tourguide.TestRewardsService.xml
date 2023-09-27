@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.openclassrooms.tourguide.TestRewardsService" time="37.959" tests="3" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="com.openclassrooms.tourguide.TestRewardsService" time="39.587" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,8 +15,9 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="FR"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-17\bin"/>
-    <property name="sun.java.command" value="C:\Users\simon\AppData\Local\Temp\surefire14255295673560699602\surefirebooter-20230927102446518_3.jar C:\Users\simon\AppData\Local\Temp\surefire14255295673560699602 2023-09-27T10-24-46_386-jvmRun1 surefire-20230927102446518_1tmp surefire_0-20230927102446518_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\simon\AppData\Local\Temp\surefire4370092287355128514\surefirebooter-20230927165607470_3.jar C:\Users\simon\AppData\Local\Temp\surefire4370092287355128514 2023-09-27T16-56-07_341-jvmRun1 surefire-20230927165607470_1tmp surefire_0-20230927165607470_2tmp"/>
     <property name="jdk.debug" value="release"/>
+    <property name="test" value="TestRewardsService#nearAllAttractions"/>
     <property name="surefire.test.class.path" value="C:\Users\simon\eclipse-workspace\TourGuide\target\test-classes;C:\Users\simon\eclipse-workspace\TourGuide\target\classes;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-starter-actuator\3.1.1\spring-boot-starter-actuator-3.1.1.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-starter\3.1.1\spring-boot-starter-3.1.1.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot\3.1.1\spring-boot-3.1.1.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-autoconfigure\3.1.1\spring-boot-autoconfigure-3.1.1.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-starter-logging\3.1.1\spring-boot-starter-logging-3.1.1.jar;C:\Users\simon\.m2\repository\ch\qos\logback\logback-classic\1.4.8\logback-classic-1.4.8.jar;C:\Users\simon\.m2\repository\ch\qos\logback\logback-core\1.4.8\logback-core-1.4.8.jar;C:\Users\simon\.m2\repository\org\apache\logging\log4j\log4j-to-slf4j\2.20.0\log4j-to-slf4j-2.20.0.jar;C:\Users\simon\.m2\repository\org\apache\logging\log4j\log4j-api\2.20.0\log4j-api-2.20.0.jar;C:\Users\simon\.m2\repository\org\slf4j\jul-to-slf4j\2.0.7\jul-to-slf4j-2.0.7.jar;C:\Users\simon\.m2\repository\jakarta\annotation\jakarta.annotation-api\2.1.1\jakarta.annotation-api-2.1.1.jar;C:\Users\simon\.m2\repository\org\yaml\snakeyaml\1.33\snakeyaml-1.33.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-actuator-autoconfigure\3.1.1\spring-boot-actuator-autoconfigure-3.1.1.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-actuator\3.1.1\spring-boot-actuator-3.1.1.jar;C:\Users\simon\.m2\repository\com\fasterxml\jackson\core\jackson-databind\2.15.2\jackson-databind-2.15.2.jar;C:\Users\simon\.m2\repository\com\fasterxml\jackson\core\jackson-annotations\2.15.2\jackson-annotations-2.15.2.jar;C:\Users\simon\.m2\repository\com\fasterxml\jackson\core\jackson-core\2.15.2\jackson-core-2.15.2.jar;C:\Users\simon\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jsr310\2.15.2\jackson-datatype-jsr310-2.15.2.jar;C:\Users\simon\.m2\repository\io\micrometer\micrometer-observation\1.11.1\micrometer-observation-1.11.1.jar;C:\Users\simon\.m2\repository\io\micrometer\micrometer-commons\1.11.1\micrometer-commons-1.11.1.jar;C:\Users\simon\.m2\repository\io\micrometer\micrometer-core\1.11.1\micrometer-core-1.11.1.jar;C:\Users\simon\.m2\repository\org\hdrhistogram\HdrHistogram\2.1.12\HdrHistogram-2.1.12.jar;C:\Users\simon\.m2\repository\org\latencyutils\LatencyUtils\2.0.3\LatencyUtils-2.0.3.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-starter-validation\3.1.1\spring-boot-starter-validation-3.1.1.jar;C:\Users\simon\.m2\repository\org\apache\tomcat\embed\tomcat-embed-el\10.1.10\tomcat-embed-el-10.1.10.jar;C:\Users\simon\.m2\repository\org\hibernate\validator\hibernate-validator\8.0.0.Final\hibernate-validator-8.0.0.Final.jar;C:\Users\simon\.m2\repository\jakarta\validation\jakarta.validation-api\3.0.2\jakarta.validation-api-3.0.2.jar;C:\Users\simon\.m2\repository\org\jboss\logging\jboss-logging\3.5.1.Final\jboss-logging-3.5.1.Final.jar;C:\Users\simon\.m2\repository\com\fasterxml\classmate\1.5.1\classmate-1.5.1.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-starter-web\3.1.1\spring-boot-starter-web-3.1.1.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-starter-json\3.1.1\spring-boot-starter-json-3.1.1.jar;C:\Users\simon\.m2\repository\com\fasterxml\jackson\datatype\jackson-datatype-jdk8\2.15.2\jackson-datatype-jdk8-2.15.2.jar;C:\Users\simon\.m2\repository\com\fasterxml\jackson\module\jackson-module-parameter-names\2.15.2\jackson-module-parameter-names-2.15.2.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-starter-tomcat\3.1.1\spring-boot-starter-tomcat-3.1.1.jar;C:\Users\simon\.m2\repository\org\apache\tomcat\embed\tomcat-embed-core\10.1.10\tomcat-embed-core-10.1.10.jar;C:\Users\simon\.m2\repository\org\apache\tomcat\embed\tomcat-embed-websocket\10.1.10\tomcat-embed-websocket-10.1.10.jar;C:\Users\simon\.m2\repository\org\springframework\spring-web\6.0.10\spring-web-6.0.10.jar;C:\Users\simon\.m2\repository\org\springframework\spring-beans\6.0.10\spring-beans-6.0.10.jar;C:\Users\simon\.m2\repository\org\springframework\spring-webmvc\6.0.10\spring-webmvc-6.0.10.jar;C:\Users\simon\.m2\repository\org\springframework\spring-aop\6.0.10\spring-aop-6.0.10.jar;C:\Users\simon\.m2\repository\org\springframework\spring-context\6.0.10\spring-context-6.0.10.jar;C:\Users\simon\.m2\repository\org\springframework\spring-expression\6.0.10\spring-expression-6.0.10.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-starter-test\3.1.1\spring-boot-starter-test-3.1.1.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-test\3.1.1\spring-boot-test-3.1.1.jar;C:\Users\simon\.m2\repository\org\springframework\boot\spring-boot-test-autoconfigure\3.1.1\spring-boot-test-autoconfigure-3.1.1.jar;C:\Users\simon\.m2\repository\com\jayway\jsonpath\json-path\2.8.0\json-path-2.8.0.jar;C:\Users\simon\.m2\repository\jakarta\xml\bind\jakarta.xml.bind-api\4.0.0\jakarta.xml.bind-api-4.0.0.jar;C:\Users\simon\.m2\repository\jakarta\activation\jakarta.activation-api\2.1.2\jakarta.activation-api-2.1.2.jar;C:\Users\simon\.m2\repository\net\minidev\json-smart\2.4.11\json-smart-2.4.11.jar;C:\Users\simon\.m2\repository\net\minidev\accessors-smart\2.4.11\accessors-smart-2.4.11.jar;C:\Users\simon\.m2\repository\org\assertj\assertj-core\3.24.2\assertj-core-3.24.2.jar;C:\Users\simon\.m2\repository\net\bytebuddy\byte-buddy\1.14.5\byte-buddy-1.14.5.jar;C:\Users\simon\.m2\repository\org\hamcrest\hamcrest\2.2\hamcrest-2.2.jar;C:\Users\simon\.m2\repository\org\junit\jupiter\junit-jupiter\5.9.3\junit-jupiter-5.9.3.jar;C:\Users\simon\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.9.3\junit-jupiter-params-5.9.3.jar;C:\Users\simon\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.9.3\junit-jupiter-engine-5.9.3.jar;C:\Users\simon\.m2\repository\org\junit\platform\junit-platform-engine\1.9.3\junit-platform-engine-1.9.3.jar;C:\Users\simon\.m2\repository\org\mockito\mockito-core\5.3.1\mockito-core-5.3.1.jar;C:\Users\simon\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.5\byte-buddy-agent-1.14.5.jar;C:\Users\simon\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\simon\.m2\repository\org\mockito\mockito-junit-jupiter\5.3.1\mockito-junit-jupiter-5.3.1.jar;C:\Users\simon\.m2\repository\org\skyscreamer\jsonassert\1.5.1\jsonassert-1.5.1.jar;C:\Users\simon\.m2\repository\com\vaadin\external\google\android-json\0.0.20131108.vaadin1\android-json-0.0.20131108.vaadin1.jar;C:\Users\simon\.m2\repository\org\springframework\spring-core\6.0.10\spring-core-6.0.10.jar;C:\Users\simon\.m2\repository\org\springframework\spring-jcl\6.0.10\spring-jcl-6.0.10.jar;C:\Users\simon\.m2\repository\org\springframework\spring-test\6.0.10\spring-test-6.0.10.jar;C:\Users\simon\.m2\repository\org\xmlunit\xmlunit-core\2.9.1\xmlunit-core-2.9.1.jar;C:\Users\simon\.m2\repository\org\apache\commons\commons-lang3\3.12.0\commons-lang3-3.12.0.jar;C:\Users\simon\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.9.3\junit-jupiter-api-5.9.3.jar;C:\Users\simon\.m2\repository\org\opentest4j\opentest4j\1.2.0\opentest4j-1.2.0.jar;C:\Users\simon\.m2\repository\org\junit\platform\junit-platform-commons\1.9.3\junit-platform-commons-1.9.3.jar;C:\Users\simon\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\simon\.m2\repository\org\jacoco\jacoco-maven-plugin\0.8.10\jacoco-maven-plugin-0.8.10.jar;C:\Users\simon\.m2\repository\org\codehaus\plexus\plexus-utils\3.0.24\plexus-utils-3.0.24.jar;C:\Users\simon\.m2\repository\org\apache\maven\shared\file-management\1.2.1\file-management-1.2.1.jar;C:\Users\simon\.m2\repository\org\apache\maven\maven-plugin-api\2.0.6\maven-plugin-api-2.0.6.jar;C:\Users\simon\.m2\repository\org\apache\maven\shared\maven-shared-io\1.1\maven-shared-io-1.1.jar;C:\Users\simon\.m2\repository\org\apache\maven\maven-artifact\2.0.2\maven-artifact-2.0.2.jar;C:\Users\simon\.m2\repository\org\apache\maven\maven-artifact-manager\2.0.2\maven-artifact-manager-2.0.2.jar;C:\Users\simon\.m2\repository\org\apache\maven\maven-repository-metadata\2.0.2\maven-repository-metadata-2.0.2.jar;C:\Users\simon\.m2\repository\org\apache\maven\wagon\wagon-provider-api\1.0-alpha-6\wagon-provider-api-1.0-alpha-6.jar;C:\Users\simon\.m2\repository\org\codehaus\plexus\plexus-container-default\1.0-alpha-9\plexus-container-default-1.0-alpha-9.jar;C:\Users\simon\.m2\repository\junit\junit\4.13.2\junit-4.13.2.jar;C:\Users\simon\.m2\repository\org\hamcrest\hamcrest-core\2.2\hamcrest-core-2.2.jar;C:\Users\simon\.m2\repository\classworlds\classworlds\1.1-alpha-2\classworlds-1.1-alpha-2.jar;C:\Users\simon\.m2\repository\org\apache\maven\reporting\maven-reporting-api\3.0\maven-reporting-api-3.0.jar;C:\Users\simon\.m2\repository\org\apache\maven\doxia\doxia-sink-api\1.0\doxia-sink-api-1.0.jar;C:\Users\simon\.m2\repository\org\jacoco\org.jacoco.agent\0.8.10\org.jacoco.agent-0.8.10-runtime.jar;C:\Users\simon\.m2\repository\org\jacoco\org.jacoco.core\0.8.10\org.jacoco.core-0.8.10.jar;C:\Users\simon\.m2\repository\org\ow2\asm\asm\9.5\asm-9.5.jar;C:\Users\simon\.m2\repository\org\ow2\asm\asm-commons\9.5\asm-commons-9.5.jar;C:\Users\simon\.m2\repository\org\ow2\asm\asm-tree\9.5\asm-tree-9.5.jar;C:\Users\simon\.m2\repository\org\jacoco\org.jacoco.report\0.8.10\org.jacoco.report-0.8.10.jar;C:\Users\simon\.m2\repository\gpsUtil\gpsUtil\1.0.0\gpsUtil-1.0.0.jar;C:\Users\simon\.m2\repository\com\google\code\findbugs\jsr305\1.3.9\jsr305-1.3.9.jar;C:\Users\simon\.m2\repository\com\google\errorprone\error_prone_annotations\2.0.18\error_prone_annotations-2.0.18.jar;C:\Users\simon\.m2\repository\com\google\j2objc\j2objc-annotations\1.1\j2objc-annotations-1.1.jar;C:\Users\simon\.m2\repository\org\codehaus\mojo\animal-sniffer-annotations\1.14\animal-sniffer-annotations-1.14.jar;C:\Users\simon\.m2\repository\tripPricer\tripPricer\1.0.0\tripPricer-1.0.0.jar;C:\Users\simon\.m2\repository\rewardCentral\rewardCentral\1.0.0\rewardCentral-1.0.0.jar;C:\Users\simon\.m2\repository\org\testng\testng\7.8.0\testng-7.8.0.jar;C:\Users\simon\.m2\repository\org\slf4j\slf4j-api\2.0.7\slf4j-api-2.0.7.jar;C:\Users\simon\.m2\repository\com\beust\jcommander\1.82\jcommander-1.82.jar;C:\Users\simon\.m2\repository\org\webjars\jquery\3.6.1\jquery-3.6.1.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
     <property name="user.home" value="C:\Users\simon"/>
@@ -30,7 +31,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\simon\AppData\Local\Temp\surefire14255295673560699602\surefirebooter-20230927102446518_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\simon\AppData\Local\Temp\surefire4370092287355128514\surefirebooter-20230927165607470_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.6+9-LTS-190"/>
@@ -56,113 +57,14 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="nearAllAttractions" classname="com.openclassrooms.tourguide.TestRewardsService" time="37.537">
-    <system-out><![CDATA[10:24:48.424 [main] INFO com.openclassrooms.tourguide.service.TourGuideService -- TestMode enabled
-10:24:48.424 [pool-3-thread-1] INFO com.openclassrooms.tourguide.tracker.Tracker -- Begin Tracker. Tracking 1 users.
-10:24:48.458 [pool-3-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser0
-10:24:48.513 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser72
-10:24:48.587 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser71
-10:24:48.647 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser90
-10:24:48.736 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser89
-10:24:48.781 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser88
-10:24:48.827 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser85
-10:24:48.915 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser84
-10:24:48.959 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser87
-10:24:49.063 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser86
-10:24:49.112 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser81
-10:24:49.172 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser80
-10:24:49.263 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser83
-10:24:49.306 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser82
-10:24:49.366 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser9
-10:24:49.432 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser8
-10:24:49.505 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser19
-10:24:49.612 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser16
-10:24:49.676 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser15
-10:24:49.723 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser18
-10:24:49.821 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser17
-10:24:49.887 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser12
-10:24:49.949 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser11
-10:24:50.053 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser99
-10:24:50.137 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser14
-10:24:50.203 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser13
-10:24:50.264 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser3
-10:24:50.316 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser96
-10:24:50.357 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser2
-10:24:50.439 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser95
-10:24:50.541 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser1
-10:24:50.620 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser10
-10:24:50.677 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser98
-10:24:50.744 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser0
-10:24:50.808 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser97
-10:24:50.892 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser7
-10:24:50.989 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser92
-10:24:51.033 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser6
-10:24:51.099 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser91
-10:24:51.189 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser5
-10:24:51.275 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser94
-10:24:51.360 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser4
-10:24:51.466 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser93
-10:24:51.563 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser27
-10:24:51.640 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser26
-10:24:51.686 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser29
-10:24:51.792 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser28
-10:24:51.890 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser23
-10:24:51.978 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser22
-10:24:52.080 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser25
-10:24:52.182 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser24
-10:24:52.285 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser21
-10:24:52.369 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser20
-10:24:52.452 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser38
-10:24:52.514 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser37
-10:24:52.561 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser39
-10:24:52.618 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser34
-10:24:52.723 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser33
-10:24:52.814 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser36
-10:24:52.915 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser35
-10:24:52.970 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser30
-10:24:53.062 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser32
-10:24:53.133 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser31
-10:24:53.184 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser49
-10:24:53.273 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser48
-10:24:53.315 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser45
-10:24:53.413 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser44
-10:24:53.469 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser47
-10:24:53.578 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser46
-10:24:53.684 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser41
-10:24:53.782 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser40
-10:24:53.860 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser43
-10:24:53.955 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser42
-10:24:54.051 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser59
-10:24:54.160 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser56
-10:24:54.259 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser55
-10:24:54.358 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser58
-10:24:54.462 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser57
-10:24:54.549 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser52
-10:24:54.619 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser51
-10:24:54.700 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser54
-10:24:54.790 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser53
-10:24:54.849 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser50
-10:24:54.918 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser67
-10:24:54.965 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser66
-10:24:55.021 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser69
-10:24:55.126 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser68
-10:24:55.214 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser63
-10:24:55.323 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser62
-10:24:55.383 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser65
-10:24:55.478 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser64
-10:24:55.524 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser61
-10:24:55.584 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser60
-10:24:55.595 [pool-2-thread-1] INFO com.openclassrooms.tourguide.tracker.Tracker -- Tracker Time Elapsed: 7 seconds.
-10:24:55.595 [pool-2-thread-1] INFO com.openclassrooms.tourguide.tracker.Tracker -- Tracker sleeping
+  <testcase name="nearAllAttractions" classname="com.openclassrooms.tourguide.TestRewardsService" time="39.561">
+    <system-out><![CDATA[16:56:08.651 [main] INFO com.openclassrooms.tourguide.service.TourGuideService -- TestMode enabled
+16:56:08.729 [pool-2-thread-1] INFO com.openclassrooms.tourguide.tracker.Tracker -- Begin Tracker. Tracking 1 users.
+16:56:08.748 [main] INFO com.openclassrooms.tourguide.service.RewardsService -- attractions size before : 26
+16:56:08.750 [main] INFO com.openclassrooms.tourguide.service.RewardsService -- attractions size after removeIf : 26
+16:56:08.795 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user internalUser0
+16:56:08.808 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.RewardsService -- attractions size before : 26
+16:56:08.808 [pool-2-thread-1] INFO com.openclassrooms.tourguide.service.RewardsService -- attractions size after removeIf : 26
 ]]></system-out>
   </testcase>
-  <testcase name="userGetRewards" classname="com.openclassrooms.tourguide.TestRewardsService" time="0.406">
-    <system-out><![CDATA[10:25:25.959 [main] INFO com.openclassrooms.tourguide.service.TourGuideService -- TestMode enabled
-10:25:25.959 [pool-4-thread-1] INFO com.openclassrooms.tourguide.tracker.Tracker -- Begin Tracker. Tracking 0 users.
-10:25:25.959 [pool-4-thread-1] INFO com.openclassrooms.tourguide.tracker.Tracker -- Tracker Time Elapsed: 0 seconds.
-10:25:25.959 [pool-4-thread-1] INFO com.openclassrooms.tourguide.tracker.Tracker -- Tracker sleeping
-10:25:26.054 [main] INFO com.openclassrooms.tourguide.service.TourGuideService -- Adding the current location to the user jon
-]]></system-out>
-  </testcase>
-  <testcase name="isWithinAttractionProximity" classname="com.openclassrooms.tourguide.TestRewardsService" time="0.013"/>
 </testsuite>

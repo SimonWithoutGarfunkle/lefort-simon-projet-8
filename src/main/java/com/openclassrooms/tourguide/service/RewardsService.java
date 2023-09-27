@@ -1,6 +1,9 @@
 package com.openclassrooms.tourguide.service;
 
 import java.util.*;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.openclassrooms.tourguide.controller.NearByAttractionsDTO;
 import org.slf4j.Logger;
@@ -32,12 +35,25 @@ public class RewardsService {
 	private int attractionProximityRange = 200;
 	private final GpsUtil gpsUtil;
 	private final RewardCentral rewardsCentral;
+	//Method getAttractions from gpsUtil is slow so it's called only once
+	private final List<Attraction> allAttractions;
+
+	private final ExecutorService executorService = Executors.newFixedThreadPool(6000);
 
 	private final Set<String> addedAttractionNames = Collections.synchronizedSet(new HashSet<>());
 	
 	public RewardsService(GpsUtil gpsUtil, RewardCentral rewardCentral) {
 		this.gpsUtil = gpsUtil;
 		this.rewardsCentral = rewardCentral;
+		this.allAttractions = Collections.unmodifiableList(gpsUtil.getAttractions());
+	}
+
+	public ExecutorService getExecutorService() {
+		return executorService;
+	}
+
+	public void shutDowExecutorService() {
+		executorService.shutdown();
 	}
 	
 	public void setProximityBuffer(int proximityBuffer) {
@@ -48,34 +64,37 @@ public class RewardsService {
 		proximityBuffer = defaultProximityBuffer;
 	}
 
+	public void calculateRewardsForAllUsers(List<User> users) {
+		logger.info("calculating rewards for "+users.size()+" users");
+		List<CompletableFuture<Void>> futures = new ArrayList<>();
 
-	/*
+		users.forEach(user -> futures.add(CompletableFuture.runAsync(() -> calculateRewards(user), executorService)));
+
+		futures.forEach(CompletableFuture::join);
+	}
+
+
+	/**
 	 * Calculate rewards and call the add method to reward the user based on all known location of the specified user
 	 * We use a first filter to reduce the size of rewardsToAdd so the add method goes faster
 	 *
 	 * @param user to add rewards
-
 	 */
 	public void calculateRewards(User user) {
 
 		List<VisitedLocation> userLocations = new ArrayList<>(user.getVisitedLocations());
 		logger.debug("calculate reward for "+user.getUserName()+" on his "+userLocations.size()+" known locations");
 
-		List<Attraction> attractions = new ArrayList<>(gpsUtil.getAttractions());
+		List<Attraction> attractions = new ArrayList<>(this.allAttractions);
 
-		// First filter with already rewarded attractions for the user
-		Set<String> alreadyRewardedAttractionName = new HashSet<>();
 		List<UserReward> existingRewards = new ArrayList<>(user.getUserRewards());
-		for (UserReward alreadyRewarded : existingRewards) {
-			alreadyRewardedAttractionName.add(alreadyRewarded.attraction.attractionName);
-			logger.info(alreadyRewarded.attraction.attractionName);
-		}
-		
+		attractions.removeIf(attraction -> existingRewards.stream()
+				.anyMatch(reward -> reward.attraction.attractionName.equals(attraction.attractionName)));
 
 		List<UserReward> rewardsToAdd = new ArrayList<>();
 		for(VisitedLocation visitedLocation : userLocations) {
 			for(Attraction attraction : attractions) {
-				if(nearAttraction(visitedLocation, attraction) && (!(alreadyRewardedAttractionName.contains(attraction.attractionName)))) {
+				if(nearAttraction(visitedLocation, attraction)) {
 					rewardsToAdd.add(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user.getUserId())));
 				}
 
@@ -86,14 +105,13 @@ public class RewardsService {
 	}
 
 
-	 /*
+	 /**
 	 * Second filter of the list rewards to add, to make sure the list of already rewarded attraction is up-to-date
 	 * Then add the new rewards to the user
 	 *
 	 * @param user to add rewards
 	 * @param rewardsToAdd List of reward to verify then to add
-
-	  */
+	 */
 	private synchronized void addCalculatedRewards(User user, List<UserReward> rewardsToAdd) {
 
 		Set<String> alreadyRewardedAttractionName = new HashSet<>();
