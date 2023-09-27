@@ -1,10 +1,14 @@
 package com.openclassrooms.tourguide.controller;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.util.UUID;
 
 public class NearByAttractionsDTO {
 
+    @JsonIgnore
     private UUID attractionId;
+    @JsonIgnore
     private UUID userId;
     private String attractionName;
     private double attractionLongitude;
@@ -16,6 +20,22 @@ public class NearByAttractionsDTO {
 
     public String getAttractionName() {
         return attractionName;
+    }
+
+    public UUID getAttractionId() {
+        return attractionId;
+    }
+
+    public void setAttractionId(UUID attractionId) {
+        this.attractionId = attractionId;
+    }
+
+    public UUID getUserId() {
+        return userId;
+    }
+
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public double getAttractionLongitude() {

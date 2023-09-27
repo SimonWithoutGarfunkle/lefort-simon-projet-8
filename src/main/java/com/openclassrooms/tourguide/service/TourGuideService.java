@@ -183,19 +183,26 @@ public class TourGuideService {
 		List<NearByAttractionsDTO> result = new ArrayList<>();
 		for (Attraction attraction : attractions) {
 			NearByAttractionsDTO nearByAttractionsDTO = new NearByAttractionsDTO();
+			nearByAttractionsDTO.setAttractionId(attraction.attractionId);
+			nearByAttractionsDTO.setUserId(visitedLocation.userId);
 			nearByAttractionsDTO.setAttractionName(attraction.attractionName);
 			nearByAttractionsDTO.setAttractionLongitude(attraction.longitude);
 			nearByAttractionsDTO.setAttractionLatitude(attraction.latitude);
 			nearByAttractionsDTO.setUserLongitude(visitedLocation.location.longitude);
 			nearByAttractionsDTO.setUserLatitude(visitedLocation.location.latitude);
 			nearByAttractionsDTO.setDistance(rewardsService.getDistance(visitedLocation.location, attraction));
-			nearByAttractionsDTO.setRewardPoints(rewardsService.getRewardPoints(attraction, visitedLocation.userId ));
 			result.add(nearByAttractionsDTO);
 		}
 
 		result.sort(Comparator.comparingDouble(NearByAttractionsDTO::getDistance));
 		//Keep only the 5 first(=closest) attractions of the list
 		result = result.subList(0, Math.min(NUMBER_OF_CLOSE_ATTRACTIONS, result.size()));
+
+		//getRewardPoints is slow so we add the points only after we reduce the list to 5 items
+		for (NearByAttractionsDTO attractionDTO : result) {
+			attractionDTO.setRewardPoints(rewardsService.getRewardPoints(attractionDTO, visitedLocation.userId));
+		}
+
 		return result;
 	}
 

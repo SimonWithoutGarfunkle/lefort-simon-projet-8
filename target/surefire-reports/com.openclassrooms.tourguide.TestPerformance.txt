@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.openclassrooms.tourguide.TestPerformance
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.842 s - in com.openclassrooms.tourguide.TestPerformance
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.9 s - in com.openclassrooms.tourguide.TestPerformance

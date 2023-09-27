@@ -2,6 +2,7 @@ package com.openclassrooms.tourguide.service;
 
 import java.util.*;
 
+import com.openclassrooms.tourguide.controller.NearByAttractionsDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,7 @@ public class RewardsService {
 	 *
 	 * @param user to add rewards
 
+	 */
 	public void calculateRewards(User user) {
 
 		List<VisitedLocation> userLocations = new ArrayList<>(user.getVisitedLocations());
@@ -68,6 +70,7 @@ public class RewardsService {
 			alreadyRewardedAttractionName.add(alreadyRewarded.attraction.attractionName);
 			logger.info(alreadyRewarded.attraction.attractionName);
 		}
+		
 
 		List<UserReward> rewardsToAdd = new ArrayList<>();
 		for(VisitedLocation visitedLocation : userLocations) {
@@ -83,13 +86,14 @@ public class RewardsService {
 	}
 
 
+	 /*
 	 * Second filter of the list rewards to add, to make sure the list of already rewarded attraction is up-to-date
 	 * Then add the new rewards to the user
 	 *
 	 * @param user to add rewards
 	 * @param rewardsToAdd List of reward to verify then to add
 
-
+	  */
 	private synchronized void addCalculatedRewards(User user, List<UserReward> rewardsToAdd) {
 
 		Set<String> alreadyRewardedAttractionName = new HashSet<>();
@@ -106,10 +110,10 @@ public class RewardsService {
 
 			}
 		}
-	}*/
+	}
 
 
-	public void calculateRewards(User user) {
+	/*public void calculateRewards(User user) {
 		List<VisitedLocation> userLocations = new ArrayList<>(user.getVisitedLocations());
 		List<Attraction> attractions = gpsUtil.getAttractions();
 		for(VisitedLocation visitedLocation : userLocations) {
@@ -124,7 +128,7 @@ public class RewardsService {
 				}
 			}
 		}
-	}
+	}*/
 
 	/**
 	 * Verify the attraction is in range (attractionProximityRange) of the location
@@ -160,6 +164,18 @@ public class RewardsService {
 	public int getRewardPoints(Attraction attraction, UUID userId) {
 		logger.debug("Assign reward points to "+userId+" for attraction "+attraction.attractionName);
 		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, userId);
+	}
+
+	/**
+	 * Ask the RewardCentral to assign reward points for the specified NearByAttractionDTO to the specified user
+	 *
+	 * @param attractionDTO to be rewarded
+	 * @param userId user to reward
+	 * @return Int number of points
+	 */
+	public int getRewardPoints(NearByAttractionsDTO attractionDTO, UUID userId) {
+		logger.debug("Assign reward points to "+userId+" for attractionDTO "+attractionDTO.getAttractionName());
+		return rewardsCentral.getAttractionRewardPoints(attractionDTO.getAttractionId(), userId);
 	}
 
 	/**
