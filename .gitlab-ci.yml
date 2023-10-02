@@ -15,21 +15,19 @@
 # https://docs.gitlab.com/ee/development/cicd/templates.html
 # This specific template is located at:
 # https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
-before_script:
-  - chmod +x ./mvnw
 
-stages:          # List of stages for jobs, and their order of execution
-  - build
-  - test
-  - quality
-
+stages:
+ - build
+ - test
+ - quality
+ - package
 
 cache:
  paths:
    - .m2/repository
  key: "$CI_JOB_NAME"
 
-build-job:       # This job runs in the build stage, which runs first.
+build_job:
   stage: build
   image: eclipse-temurin:17-jdk-alpine
   script:
@@ -41,12 +39,17 @@ build-job:       # This job runs in the build stage, which runs first.
       -Djava.awt.headless=true
       --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
 
-test-job:   # This job runs in the test stage.
-  stage: test    # It only starts when the job in the build stage completes successfully.
+test_job:
+  stage: test
   image: eclipse-temurin:17-jdk-alpine
   script:
-    - ./mvnw test          
-    - echo "Running all tests... "
+    - ./mvnw test
+      -Dhttps.protocols=TLSv1.2
+      -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+      -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
+      -Dorg.slf4j.simpleLogger.showDateTime=true
+      -Djava.awt.headless=true
+      --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
 
 code_quality_job:
   stage: quality
@@ -65,3 +68,23 @@ code_quality_job:
   artifacts:
     paths:
       - codequality-results/      
+    
+package_job:
+  stage: package
+  image: eclipse-temurin:17-jdk-alpine
+  services:
+    - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+  script:
+    - apk add --no-cache docker-cli-compose
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
+    - ./mvnw install -PbuildDocker -DskipTests=true -DpushImage
+      -Dhttps.protocols=TLSv1.2
+      -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+      -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
+      -Dorg.slf4j.simpleLogger.showDateTime=true
+      -Djava.awt.headless=true
+      --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
+    - docker compose build
+    - docker compose push
