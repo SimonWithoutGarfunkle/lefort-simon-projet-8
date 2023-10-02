@@ -31,9 +31,13 @@ build-job:       # This job runs in the build stage, which runs first.
   stage: build
   image: eclipse-temurin:17-jdk-alpine
   script:
-    - ./mvn compile
-    - echo "Compiling the code..."
-    - echo "Compile complete."
+    - ./mvnw compile
+      -Dhttps.protocols=TLSv1.2
+      -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
+      -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
+      -Dorg.slf4j.simpleLogger.showDateTime=true
+      -Djava.awt.headless=true
+      --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
 
 test-job:   # This job runs in the test stage.
   stage: test    # It only starts when the job in the build stage completes successfully.
