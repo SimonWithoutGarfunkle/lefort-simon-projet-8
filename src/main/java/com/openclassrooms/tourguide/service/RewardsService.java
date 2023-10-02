@@ -64,6 +64,11 @@ public class RewardsService {
 		proximityBuffer = defaultProximityBuffer;
 	}
 
+	/**
+	 * Call the method calculateRewards on a list of user in parallel with the executorService for the multithreading
+	 *
+	 * @param users to calculate the rewards
+	 */
 	public void calculateRewardsForAllUsers(List<User> users) {
 		logger.info("calculating rewards for "+users.size()+" users");
 		List<CompletableFuture<Void>> futures = new ArrayList<>();
@@ -76,7 +81,6 @@ public class RewardsService {
 
 	/**
 	 * Calculate rewards and call the add method to reward the user based on all known location of the specified user
-	 * We use a first filter to reduce the size of rewardsToAdd so the add method goes faster
 	 *
 	 * @param user to add rewards
 	 */
@@ -106,8 +110,8 @@ public class RewardsService {
 
 
 	 /**
-	 * Second filter of the list rewards to add, to make sure the list of already rewarded attraction is up-to-date
-	 * Then add the new rewards to the user
+	 * Synchronized method to avoid doubloons
+	 * Compare the list of reward with the last version of userRewards and add the new rewards
 	 *
 	 * @param user to add rewards
 	 * @param rewardsToAdd List of reward to verify then to add
@@ -130,23 +134,6 @@ public class RewardsService {
 		}
 	}
 
-
-	/*public void calculateRewards(User user) {
-		List<VisitedLocation> userLocations = new ArrayList<>(user.getVisitedLocations());
-		List<Attraction> attractions = gpsUtil.getAttractions();
-		for(VisitedLocation visitedLocation : userLocations) {
-			for(Attraction attraction : attractions) {
-				synchronized(addedAttractionNames) {
-					if(!addedAttractionNames.contains(attraction.attractionName)) {
-						if(nearAttraction(visitedLocation, attraction)) {
-							user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user.getUserId())));
-							addedAttractionNames.add(attraction.attractionName);
-						}
-					}
-				}
-			}
-		}
-	}*/
 
 	/**
 	 * Verify the attraction is in range (attractionProximityRange) of the location
