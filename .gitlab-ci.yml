@@ -1,55 +1,36 @@
-# This file is a template, and might need editing before it works on your project.
-# This is a sample GitLab CI/CD configuration file that should run without any modifications.
-# It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
-# it uses echo commands to simulate the pipeline execution.
-#
-# A pipeline is composed of independent jobs that run scripts, grouped into stages.
-# Stages run in sequential order, but jobs within stages run in parallel.
-#
-# For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
-#
-# You can copy and paste this template into a new `.gitlab-ci.yml` file.
-# You should not add this template to an existing `.gitlab-ci.yml` file by using the `include:` keyword.
-#
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
+before_script:
+  - ls -la ./libs/
+  - chmod +x ./mvnw
+  - ./mvnw install:install-file -Dfile=./libs/gpsUtil.jar -DgroupId=gpsUtil -DartifactId=gpsUtil -Dversion=1.0.0 -Dpackaging=jar
+  - ./mvnw install:install-file -Dfile=./libs/RewardCentral.jar -DgroupId=rewardCentral -DartifactId=rewardCentral -Dversion=1.0.0 -Dpackaging=jar
+  - ./mvnw install:install-file -Dfile=./libs/TripPricer.jar -DgroupId=tripPricer -DartifactId=tripPricer -Dversion=1.0.0 -Dpackaging=jar
+
 
 stages:
- - build
- - test
- - quality
- - package
+  - build
+  - test
+  - quality
+  - package
 
 cache:
- paths:
-   - .m2/repository
- key: "$CI_JOB_NAME"
+  paths:
+    - .m2/repository
+  key: "$CI_JOB_NAME"
 
-build_job:
+build-job:
   stage: build
   image: eclipse-temurin:17-jdk-alpine
   script:
     - ./mvnw compile
-      -Dhttps.protocols=TLSv1.2
-      -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
-      -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
-      -Dorg.slf4j.simpleLogger.showDateTime=true
-      -Djava.awt.headless=true
-      --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
+    - echo "Compiling the code..."
+    - echo "Compile complete."
 
-test_job:
+test-job:
   stage: test
   image: eclipse-temurin:17-jdk-alpine
   script:
     - ./mvnw test
-      -Dhttps.protocols=TLSv1.2
-      -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
-      -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
-      -Dorg.slf4j.simpleLogger.showDateTime=true
-      -Djava.awt.headless=true
-      --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
+    - echo "Running all tests... "
 
 code_quality_job:
   stage: quality
@@ -57,34 +38,26 @@ code_quality_job:
   image: docker:stable
   services:
     - docker:dind
+  before_script:
+    - export JAVA_HOME=$(docker run --rm eclipse-temurin:17-jdk-alpine /usr/bin/java -XshowSettings:properties -version 2>&1 > /dev/null | grep 'java.home' | awk '{print $3}')
   script:
     - mkdir codequality-results
     - docker run
-        --env CODECLIMATE_CODE="$PWD"
-        --volume "$PWD":/code
-        --volume /var/run/docker.sock:/var/run/docker.sock
-        --volume /tmp/cc:/tmp/cc
-        codeclimate/codeclimate analyze -f html > ./codequality-results/index.html
+      --env CODECLIMATE_CODE="$PWD"
+      --volume "$PWD":/code
+      --volume /var/run/docker.sock:/var/run/docker.sock
+      --volume /tmp/cc:/tmp/cc
+      codeclimate/codeclimate analyze -f html > ./codequality-results/index.html
   artifacts:
     paths:
-      - codequality-results/      
-    
-package_job:
+      - codequality-results/
+
+package-job:
   stage: package
   image: eclipse-temurin:17-jdk-alpine
-  services:
-    - docker:dind
-  variables:
-    DOCKER_HOST: tcp://docker:2375
   script:
-    - apk add --no-cache docker-cli-compose
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN $CI_REGISTRY
-    - ./mvnw install -PbuildDocker -DskipTests=true -DpushImage
-      -Dhttps.protocols=TLSv1.2
-      -Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repository
-      -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=WARN
-      -Dorg.slf4j.simpleLogger.showDateTime=true
-      -Djava.awt.headless=true
-      --batch-mode --errors --fail-at-end --show-version -DinstallAtEnd=true -DdeployAtEnd=true
-    - docker compose build
-    - docker compose push
+    - ./mvnw package -DskipTests  # Skip tests as they have already been run
+    - echo "Packaging the application..."
+  artifacts:
+    paths:
+      - target/*.jar
